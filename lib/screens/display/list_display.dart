@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:media_tracker/screens/widgets/list_display_tile.dart';
+import 'package:media_tracker/screens/display/widgets/list_display_tile.dart';
 
 class ListDisplayScreen extends StatelessWidget {
   const ListDisplayScreen({super.key, required this.entries});

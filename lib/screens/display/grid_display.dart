@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:media_tracker/models/entry.dart';
-import 'package:media_tracker/screens/widgets/grid_display_tile.dart';
+import 'package:media_tracker/screens/display/widgets/grid_display_tile.dart';
 
 class GridDisplayScreen extends StatelessWidget {
   const GridDisplayScreen({super.key, required this.entries});
@@ -10,7 +10,7 @@ class GridDisplayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 200,
+        maxCrossAxisExtent: 250,
         mainAxisExtent: 250,
       ),
       itemCount: entries.length,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:media_tracker/data/dummy_data.dart';
 import 'package:media_tracker/models/entry.dart';
 import 'package:media_tracker/models/movie.dart';
+import 'package:media_tracker/screens/display/add_entry.dart';
 import 'package:media_tracker/screens/display/grid_display.dart';
 import 'package:media_tracker/screens/display/list_display.dart';
 import '../models/book.dart';
@@ -20,6 +21,8 @@ class PagesScreenState extends State<PagesScreen> {
   List<Movie> _moviesList = [];
   List<Book> _bookList = [];
   List<Entry> _entryList = [];
+
+  List<dynamic> _entriesToShow = [];
 
   @override
   void initState() {
@@ -49,10 +52,15 @@ class PagesScreenState extends State<PagesScreen> {
         'Book': _bookList,
         'Movie': _moviesList,
       };
-      if (_selectedType == null) {
-        _selectedType = typeMap.keys.first;
+      _selectedType ??= typeMap.keys.first;
+      List<dynamic> searchQueryList(String query) {
+        List<dynamic> result = typeMap[_selectedType]!
+            .where((element) => element.title.contains(query))
+            .toList();
+        return result;
       }
 
+      _entriesToShow = typeMap[_selectedType]!;
       return Scaffold(
         appBar: EasySearchBar(
           title: DropdownButtonHideUnderline(
@@ -87,15 +95,24 @@ class PagesScreenState extends State<PagesScreen> {
               icon: Icon(Icons.settings),
             ),
           ],
-          onSearch: (elm) {
-            print(elm);
+          putActionsOnRight: true,
+          onSearch: (query) {
+            setState(() {
+              _entriesToShow = searchQueryList(query);
+            });
           },
         ),
         body: _isGridDisplay
-            ? GridDisplayScreen(entries: typeMap[_selectedType])
-            : ListDisplayScreen(entries: typeMap[_selectedType]),
+            ? GridDisplayScreen(entries: _entriesToShow)
+            : ListDisplayScreen(entries: _entriesToShow),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            isDismissible: true,
+            useSafeArea: true,
+            builder: (context) => AddEntryScreen(),
+          ),
         ),
       );
     }
