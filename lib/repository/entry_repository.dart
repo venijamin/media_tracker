@@ -1,6 +1,6 @@
 import 'package:media_tracker/models/book.dart';
 
-abstract class Repository<Entry> {
+abstract class EntryRepository<Entry> {
   Future<List<Entry>> getAll();
   Future<int> findIndex(Entry entry);
   Future<void> add(Entry entry);

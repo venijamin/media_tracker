@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -57,6 +65,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  easy_search_bar:
+    dependency: "direct main"
+    description:
+      name: easy_search_bar
+      sha256: b20343be8ab94ed9e1550cf8cbd5323c344bd9b58b9319fb6e62d75395c0bcaa
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
+  expandable:
+    dependency: "direct main"
+    description:
+      name: expandable
+      sha256: "9604d612d4d1146dafa96c6d8eec9c2ff0994658d6d09fed720ab788c7f5afc2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -78,8 +102,21 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_rating_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_rating_bar
+      sha256: d2af03469eac832c591a1eba47c91ecc871fe5708e69967073c043b2d775ed93
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
   flutter_test:
     dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -123,6 +160,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
+  motion:
+    dependency: "direct main"
+    description:
+      name: motion
+      sha256: "1764b7a4c0d5509dba58dc6cfca80c03e3f049e0175c26d0a096f76451a5f23e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
+  motion_platform_interface:
+    dependency: transitive
+    description:
+      name: motion_platform_interface
+      sha256: "0b29234fef24d18cd7c3d3f1a2a2f67998aed1c2fb8f5d484900cc9b012328de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
+  motion_web:
+    dependency: transitive
+    description:
+      name: motion_web
+      sha256: "223699d57c7f3dff7d0ffbfb9b3c8b083b9ef3dc0d260040c367c899fd38a4a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   path:
     dependency: transitive
     description:
@@ -131,6 +192,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -210,3 +279,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=2.19.5 <3.0.0"
+  flutter: ">=2.5.0"

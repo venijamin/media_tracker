@@ -1,6 +1,6 @@
-import 'package:media_tracker/repository/repository.dart';
+import 'package:media_tracker/repository/entry_repository.dart';
 
-class RepositoryImpl<Entry> implements Repository<Entry> {
+class EntryRepositoryImpl<Entry> implements EntryRepository<Entry> {
   final _entries = <Entry>[];
 
   @override
