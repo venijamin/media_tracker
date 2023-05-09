@@ -44,6 +44,7 @@ dependencies:
   cross_file_image: ^1.0.0
   image_picker: ^0.8.7+4
   flutter_barcode_scanner: ^2.0.0
+  flutter_riverpod: ^2.3.6
 
 dev_dependencies:
   flutter_test:

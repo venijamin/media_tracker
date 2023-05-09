@@ -24,10 +24,6 @@ class Entry {
 }
 
 class ReadableEntry extends Entry {
-  String author;
-  String publisher;
-  int numberOfPages;
-
   ReadableEntry({
     required super.title,
     required super.description,
@@ -40,6 +36,9 @@ class ReadableEntry extends Entry {
     required this.publisher,
     required this.numberOfPages,
   });
+  String author;
+  String publisher;
+  int numberOfPages;
 }
 
 class PlayableEntry extends Entry {
@@ -52,8 +51,12 @@ class PlayableEntry extends Entry {
     required super.category,
     required super.tags,
     required this.developer,
+    required this.publisher,
+    required this.hoursPlayed,
   });
   String developer;
+  String publisher;
+  double hoursPlayed;
 }
 
 class ViewableEntry extends Entry {

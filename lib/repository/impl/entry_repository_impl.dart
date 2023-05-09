@@ -1,15 +1,10 @@
+import 'package:media_tracker/models/entry.dart';
 import 'package:media_tracker/repository/entry_repository.dart';
 
 class EntryRepositoryImpl<Entry> implements EntryRepository<Entry> {
-  final _entries = <Entry>[];
-
+  var _entries = <Entry>[];
   @override
-  Future<List<Entry>> getAll() async {
-    return _entries;
-  }
-
-  @override
-  Future<void> add(Entry entry) async {
+  void add(Entry entry) {
     _entries.add(entry);
   }
 
@@ -27,5 +22,15 @@ class EntryRepositoryImpl<Entry> implements EntryRepository<Entry> {
   @override
   Future<int> findIndex(Entry entry) async {
     return _entries.indexOf(entry);
+  }
+
+  @override
+  Future<List<Entry>> getAll() async {
+    return _entries;
+  }
+
+  @override
+  List<Entry> getEntries() {
+    return _entries;
   }
 }
