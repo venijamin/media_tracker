@@ -26,7 +26,7 @@ class SettingsScreen extends ConsumerWidget {
           children: [
             ElevatedButton(
                 onPressed: () async {
-// Creat the json string
+// Create the json string
                   String jsonEntries = jsonEncode(
                       ref.read(entryProvider.notifier).getAllEntries());
                   String jsonCategories = jsonEncode(categories);
