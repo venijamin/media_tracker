@@ -40,13 +40,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive) {
-      print('YEEYEYEY');
-      print('YEEYEYEY');
-      print('YEEYEYEY');
-      print('YEEYEYEY');
-      print('YEEYEYEY');
-      print('YEEYEYEY');
-      print('YEEYEYEY');
+
 // Create the json string
       String jsonEntries =
           jsonEncode(ref.read(entryProvider.notifier).getAllEntries());
@@ -136,6 +130,9 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
 
     final allEntries = ref.watch(entryProvider.notifier).getAllEntries();
     return Scaffold(
+      backgroundColor: ref.read(darkModeProvider)
+            ? kDarkColorScheme.background
+            : kColorScheme.background,
         appBar: AppBar(
           title: DropdownButtonHideUnderline(
             child: DropdownButton<EntryType>(
