@@ -1,75 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+import 'package:media_tracker/models/type.dart';
 import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid_util.dart';
 
-const uuid = Uuid();
+final uuid = Uuid();
 
 class Entry {
   Entry({
     required this.title,
-    required this.description,
-    required this.comment,
-    required this.rating,
-    required this.image,
-    required this.category,
-    required this.tags,
+    this.description = '',
+    this.userReview = const [],
+    required this.type,
+    this.imageURL = '',
+    this.category = '',
+    this.rating = -1,
+    this.tags = const [],
+    this.metadata = '',
   }) : id = uuid.v4();
 
   String id;
   String title;
   String description;
-  String comment;
+
   double rating;
-  String image;
+
+  List<dynamic> userReview;
+
+  EntryType type;
+
+  String imageURL;
+
+  // read, backlog, reading, etc..
   String category;
+
   List<String> tags;
-}
 
-class ReadableEntry extends Entry {
-  ReadableEntry({
-    required super.title,
-    required super.description,
-    required super.comment,
-    required super.rating,
-    required super.image,
-    required super.category,
-    required super.tags,
-    required this.author,
-    required this.publisher,
-    required this.numberOfPages,
-  });
-  String author;
-  String publisher;
-  int numberOfPages;
-}
+  String metadata;
 
-class PlayableEntry extends Entry {
-  PlayableEntry({
-    required super.title,
-    required super.description,
-    required super.comment,
-    required super.rating,
-    required super.image,
-    required super.category,
-    required super.tags,
-    required this.developer,
-    required this.publisher,
-    required this.hoursPlayed,
-  });
-  String developer;
-  String publisher;
-  double hoursPlayed;
-}
+  static Entry fromJson(Map<String, dynamic> json) {
+    EntryType type;
+    if (json['type'] == 'Show') {
+      type = EntryType.Show;
+    } else if (json['type'] == 'Game') {
+      type = EntryType.Game;
+    } else if (json['type'] == 'Movie') {
+      type = EntryType.Movie;
+    } else {
+      type = EntryType.Book;
+    }
+    Entry entry = Entry(
+      title: json['title'],
+      type: type,
+      category: json['category'],
+      description: json['description'],
+      imageURL: json['imageURL'],
+      metadata: json['metadata'],
+      rating: json['rating'],
+      tags: json['tags'],
+      userReview: json['userReview'],
+    );
+    entry.id = json['id'];
 
-class ViewableEntry extends Entry {
-  ViewableEntry({
-    required super.title,
-    required super.description,
-    required super.comment,
-    required super.rating,
-    required super.image,
-    required super.category,
-    required super.tags,
-    required this.director,
-  });
+    return entry;
+  }
 
-  String director;
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'description': description,
+        'rating': rating,
+        'userReview': userReview,
+        'type': type.name,
+        'imageURL': imageURL,
+        'category': category,
+        'tags': tags,
+        'metadata': metadata,
+      };
 }
