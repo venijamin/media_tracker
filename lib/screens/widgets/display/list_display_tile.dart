@@ -12,6 +12,7 @@ import 'package:media_tracker/models/entry.dart';
 import 'package:media_tracker/providers/entry_provider.dart';
 import 'package:motion/motion.dart';
 
+import '../../homepage.dart';
 import '../view_entry.dart';
 
 class ListDisplayTile extends ConsumerWidget {
@@ -28,8 +29,14 @@ class ListDisplayTile extends ConsumerWidget {
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: Motion.only(
         child: ElevatedButton(
-          onLongPress: () =>
-              ref.read(entryProvider.notifier).removeEntry(entry),
+          onLongPress: () {
+            ref.read(entryProvider.notifier).removeEntry(entry);
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePageScreen(),
+                ));
+          },
           onPressed: () => showModalBottomSheet(
             context: context,
             isScrollControlled: true,

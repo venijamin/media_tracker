@@ -14,6 +14,7 @@ import 'package:media_tracker/models/type.dart';
 import 'package:media_tracker/providers/entry_provider.dart';
 import 'package:flutter_quill/flutter_quill.dart'
     show QuillController, QuillToolbar, QuillEditor;
+import 'package:media_tracker/screens/homepage.dart';
 
 import '../../data.dart';
 
@@ -596,7 +597,12 @@ class _AddEntryScreenState extends ConsumerState<AddEntryScreen> {
                                         ref
                                             .read(entryProvider.notifier)
                                             .addEntry(entry);
-                                        Navigator.pop(context);
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomePageScreen(),
+                                            ));
                                       });
                                     }
                                   },

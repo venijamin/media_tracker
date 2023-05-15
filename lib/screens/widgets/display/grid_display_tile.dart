@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:media_tracker/providers/entry_provider.dart';
+import 'package:media_tracker/screens/homepage.dart';
 import 'package:media_tracker/screens/widgets/view_entry.dart';
 import 'package:motion/motion.dart';
 
@@ -25,8 +26,14 @@ class GridDisplayTile extends ConsumerWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
-          onLongPress: () =>
-              ref.read(entryProvider.notifier).removeEntry(entry),
+          onLongPress: () {
+            ref.read(entryProvider.notifier).removeEntry(entry);
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePageScreen(),
+                ));
+          },
           onPressed: () => showModalBottomSheet(
             isScrollControlled: true,
             useSafeArea: true,

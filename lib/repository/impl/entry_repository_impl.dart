@@ -1,10 +1,74 @@
+import 'dart:convert';
+
 import 'package:media_tracker/data.dart';
 import 'package:media_tracker/models/entry.dart';
 import 'package:media_tracker/models/type.dart';
 import 'package:media_tracker/repository/entry_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+late SharedPreferences preferences;
+Future<List<Entry>> init() async {
+  preferences = await SharedPreferences.getInstance();
+  String? jsonString = preferences.getString('data');
+  var json = jsonDecode(jsonString!);
+  print(json);
+
+  var jsonEntries = jsonDecode(json['entries']);
+  var jsonCategories = jsonDecode(json['categories']);
+  var jsonTags = jsonDecode(json['tags']);
+
+  categories = [];
+  for (var category in jsonCategories) {
+    categories.add(category);
+  }
+  tags = [];
+  for (var tag in jsonTags) {
+    tags.add(tag);
+  }
+  List<Entry> entries = [];
+  for (var jsonEntry in jsonEntries) {
+    final List<String> _tags = [];
+    for (var tag in jsonEntry['tags']) {
+      _tags.add(tag);
+    }
+    EntryType type;
+
+    if (jsonEntry['type'] == 'Show') {
+      type = EntryType.Show;
+    } else if (jsonEntry['type'] == 'Game') {
+      type = EntryType.Game;
+    } else if (jsonEntry['type'] == 'Movie') {
+      type = EntryType.Movie;
+    } else {
+      type = EntryType.Book;
+    }
+    Entry entry = Entry(
+      title: jsonEntry['title'],
+      type: type,
+      category: jsonEntry['category'],
+      description: jsonEntry['description'],
+      tags: _tags,
+      imageURL: jsonEntry['imageURL'],
+      metadata: jsonEntry['metadata'],
+      rating: jsonEntry['rating'],
+      userReview: jsonEntry['userReview'],
+    );
+    entries.add(entry);
+  }
+  print(entries);
+  return entries;
+}
 
 class EntryRepositoryImpl implements EntryRepository {
   List<Entry> entries = [];
+
+  Future _init() async {
+    entries = await init();
+  }
+
+  EntryRepositoryImpl() {
+    _init();
+  }
 
   @override
   void addEntry(Entry entry) {

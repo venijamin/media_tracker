@@ -41,85 +41,36 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive) {
+      saveData();
 // Create the json string
-      String jsonEntries =
-          jsonEncode(ref.read(entryProvider.notifier).getAllEntries());
-      String jsonCategories = jsonEncode(categories);
-      String jsonTags = jsonEncode(tags);
-      var jsonData = {
-        'entries': jsonEntries,
-        'categories': jsonCategories,
-        'tags': jsonTags,
-      };
-      final json = jsonEncode(jsonData);
-
-      preferences.setString('data', json);
-      print(json);
-    } else if (state == AppLifecycleState.resumed) {
-      init();
     }
+  }
+
+  void saveData() {
+    String jsonEntries =
+        jsonEncode(ref.read(entryProvider.notifier).getAllEntries());
+    String jsonCategories = jsonEncode(categories);
+    String jsonTags = jsonEncode(tags);
+    var jsonData = {
+      'entries': jsonEntries,
+      'categories': jsonCategories,
+      'tags': jsonTags,
+    };
+    final json = jsonEncode(jsonData);
+
+    preferences.setString('data', json);
+    print(json);
   }
 
   @override
   void initState() {
     super.initState();
-    initpref();
     WidgetsBinding.instance!.addObserver(this);
+    initpref();
   }
 
   Future initpref() async {
     preferences = await SharedPreferences.getInstance();
-  }
-
-  Future init() async {
-    String? jsonString = preferences.getString('data');
-    var json = jsonDecode(jsonString!);
-    print(json);
-
-    var jsonEntries = jsonDecode(json['entries']);
-    var jsonCategories = jsonDecode(json['categories']);
-    var jsonTags = jsonDecode(json['tags']);
-
-    categories = [];
-    for (var category in jsonCategories) {
-      categories.add(category);
-    }
-    tags = [];
-    for (var tag in jsonTags) {
-      tags.add(tag);
-    }
-    List<Entry> entries = [];
-    for (var jsonEntry in jsonEntries) {
-      final List<String> _tags = [];
-      for (var tag in jsonEntry['tags']) {
-        _tags.add(tag);
-      }
-      EntryType type;
-
-      if (jsonEntry['type'] == 'Show') {
-        type = EntryType.Show;
-      } else if (jsonEntry['type'] == 'Game') {
-        type = EntryType.Game;
-      } else if (jsonEntry['type'] == 'Movie') {
-        type = EntryType.Movie;
-      } else {
-        type = EntryType.Book;
-      }
-      Entry entry = Entry(
-        title: jsonEntry['title'],
-        type: type,
-        category: jsonEntry['category'],
-        description: jsonEntry['description'],
-        tags: _tags,
-        imageURL: jsonEntry['imageURL'],
-        metadata: jsonEntry['metadata'],
-        rating: jsonEntry['rating'],
-        userReview: jsonEntry['userReview'],
-      );
-      entries.add(entry);
-    }
-    print(entries);
-    ref.read(entryProvider.notifier).replaceEntries(entries);
   }
 
   @override
@@ -130,6 +81,9 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
 
     final allEntries = ref.watch(entryProvider.notifier).getAllEntries();
     return Scaffold(
+        backgroundColor: ref.read(darkModeProvider)
+            ? kDarkColorScheme.background
+            : kColorScheme.background,
         appBar: AppBar(
           title: DropdownButtonHideUnderline(
             child: DropdownButton<EntryType>(
@@ -247,6 +201,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
                                         if (!categories
                                             .contains(_controller.text)) {
                                           categories.add(_controller.text);
+                                          Navigator.pop(context);
                                         }
                                       }),
                                   child: Text('add'))
@@ -269,6 +224,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
                                             if (entry.category ==
                                                 categories[index]) {
                                               entry.category == '';
+                                              Navigator.pop(context);
                                             }
                                           }
                                           categories.removeAt(index);
@@ -306,6 +262,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
                                                     }
                                                     categories[index] =
                                                         _controller.text;
+                                                    Navigator.pop(context);
                                                   }
                                                 }),
                                                 child: Text('replace'),
@@ -341,6 +298,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
                                   onPressed: () => setState(() {
                                         if (!tags.contains(_controller.text)) {
                                           tags.add(_controller.text);
+
+                                          Navigator.pop(context);
                                         }
                                       }),
                                   child: Text('add'))
@@ -366,6 +325,8 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
                                             }
                                           }
                                           tags.removeAt(index);
+
+                                          Navigator.pop(context);
                                         });
                                       },
                                       icon: Icon(Icons.delete),
@@ -402,6 +363,7 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
                                                     }
                                                     tags[index] =
                                                         _controller.text;
+                                                    Navigator.pop(context);
                                                   }
                                                 }),
                                                 child: Text('replace'),
