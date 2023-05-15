@@ -118,7 +118,6 @@ class ViewEntryScreen extends StatelessWidget {
                                   maxLines: 2,
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                    color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 24,
                                   ),

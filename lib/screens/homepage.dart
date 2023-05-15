@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:media_tracker/main.dart';
 import 'package:media_tracker/models/entry.dart';
 import 'package:media_tracker/models/type.dart';
 import 'package:media_tracker/providers/dark_mode_provider.dart';
@@ -136,6 +137,9 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
 
     final allEntries = ref.watch(entryProvider.notifier).getAllEntries();
     return Scaffold(
+        backgroundColor: ref.read(darkModeProvider)
+            ? kDarkColorScheme.background
+            : kColorScheme.background,
         appBar: AppBar(
           title: DropdownButtonHideUnderline(
             child: DropdownButton<EntryType>(
@@ -436,17 +440,19 @@ class _HomePageScreenState extends ConsumerState<HomePageScreen>
               )
             : ListDisplayScreen(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Motion(
+        floatingActionButton: Motion.only(
           shadow: ShadowConfiguration.fromElevation(2),
-          child: FloatingActionButton(onPressed: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              isDismissible: true,
-              useSafeArea: true,
-              context: context,
-              builder: (context) => AddEntryScreen(),
-            );
-          }),
+          child: FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  isDismissible: true,
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => AddEntryScreen(),
+                );
+              }),
         ));
   }
 }
