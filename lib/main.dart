@@ -16,6 +16,12 @@ void main() async {
   runApp(ProviderScope(child: const MyApp()));
 }
 
+var kColorScheme = ColorScheme.fromSeed(seedColor: Colors.green);
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: Colors.green,
+);
+
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
@@ -25,8 +31,14 @@ class MyApp extends ConsumerWidget {
     print(darkmode);
     return MaterialApp(
       theme: darkmode
-          ? ThemeData.dark(useMaterial3: true)
-          : ThemeData(useMaterial3: true),
+          ? ThemeData.dark().copyWith(
+              useMaterial3: true,
+              colorScheme: kDarkColorScheme,
+            )
+          : ThemeData().copyWith(
+              useMaterial3: true,
+              colorScheme: kColorScheme,
+            ),
       home: HomePageScreen(),
     );
   }
